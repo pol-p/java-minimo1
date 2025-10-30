@@ -1,8 +1,22 @@
+import java.util.*;
+import MyOwnQueue.*;
+
 public class ProductManagerImpl implements ProductManager{
     private static ProductManagerImpl PM;
+    //Mapa de los usuarios
+    private Map<Integer, Usuario> mapUsuarios;
+    //Lista de los Productos
+    private List<Producto> listProductos;
+    //Cola de comandas (Ordenes por hacer)
+    private Queuee<Pedido> queueComandas;
+    //Lista de pedidos Realizados
+    private List<Pedido> listPedidosRealizados;
 
     private ProductManagerImpl(){
-
+       this.mapUsuarios = new HashMap<Integer, Usuario>();
+       this.listProductos = new ArrayList<Producto>();
+       this.queueComandas = new QueueImpl<Pedido>(200);
+       this.listPedidosRealizados = new ArrayList<Pedido>();
     }
 
     public static ProductManagerImpl getInstance(){
@@ -12,28 +26,39 @@ public class ProductManagerImpl implements ProductManager{
         return PM;
     }
 
+
     @Override
-    public void realizarPedido() {
+    public Pedido realizarPedido(String nameUsr, List<ItemPedido> lista) {
+        return null;
+    }
+
+    @Override
+    public List<Producto> listarProductosPrecio() {
+        return List.of();
+    }
+
+    @Override
+    public Producto servirPedido() {
+        return null;
+    }
+
+    @Override
+    public List<Pedido> listarPedidosDeUsuario() {
+        return List.of();
+    }
+
+    @Override
+    public List<Producto> listarProductosNumVentas() {
+        return List.of();
+    }
+
+    @Override
+    public void addProduct(String nameProduct, double price) {
 
     }
 
     @Override
-    public void listarProductosPrecio() {
-
-    }
-
-    @Override
-    public void servirPedido() {
-
-    }
-
-    @Override
-    public void listarPedidosDeUsuario() {
-
-    }
-
-    @Override
-    public void listarProductosNumVentas() {
+    public void addUsr(String nameUsr, int idUsr) {
 
     }
 }
