@@ -1,10 +1,5 @@
-import PManager.ProductManager;
-import Products.*;
-
-import java.util.ArrayList;
-
 public class Main {
     public static void main(String[] args) {
-
+        ProductManagerImpl PM = ProductManagerImpl.getInstance();
     }
 }
