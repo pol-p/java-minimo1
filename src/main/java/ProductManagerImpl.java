@@ -34,7 +34,9 @@ public class ProductManagerImpl implements ProductManager{
 
     @Override
     public List<Producto> listarProductosPrecio() {
-        return List.of();
+        List sorted = new ArrayList<>(this.listProductos);
+        Collections.sort(sorted);
+        return sorted;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class ProductManagerImpl implements ProductManager{
 
     @Override
     public void addProduct(String nameProduct, double price) {
-
+        this.listProductos.add(new Producto(nameProduct, price));
     }
 
     @Override
