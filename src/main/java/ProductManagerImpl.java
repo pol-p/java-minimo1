@@ -1,8 +1,13 @@
 import java.util.*;
+
 import MyOwnQueue.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ProductManagerImpl implements ProductManager{
     private static ProductManagerImpl PM;
+    //Log4j
+    private static final Logger LOGGER = LogManager.getLogger(ProductManagerImpl.class);
     //Mapa de los usuarios
     private Map<Integer, Usuario> mapUsuarios;
     //Lista de los Productos
@@ -34,6 +39,7 @@ public class ProductManagerImpl implements ProductManager{
 
     @Override
     public List<Producto> listarProductosPrecio() {
+        LOGGER.info("Ordenando la lista por precio");
         List sorted = new ArrayList<>(this.listProductos);
         Collections.sort(sorted);
         return sorted;
@@ -56,6 +62,7 @@ public class ProductManagerImpl implements ProductManager{
 
     @Override
     public void addProduct(String nameProduct, double price) {
+        LOGGER.info("Añadiendo producto " + nameProduct);
         this.listProductos.add(new Producto(nameProduct, price));
     }
 
