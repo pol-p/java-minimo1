@@ -1,11 +1,18 @@
+package models;
+
 public class Producto implements Comparable<Producto>{
     private String name;
     private double price;
+    private int id;
     int numVentas;
 
-    public Producto(String n, double p){
+    public Producto() {
+    }
+
+    public Producto(int id, String n, double p){
         this.name = n;
         this.price = p;
+        this.id = id;
     }
 
     public double getPrice() {
@@ -29,4 +36,19 @@ public class Producto implements Comparable<Producto>{
         this.name = name;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getNumVentas() {
+        return numVentas;
+    }
+
+    public void setNumVentas(int numVentas) {
+        this.numVentas = numVentas;
+    }
 }

@@ -1,8 +1,9 @@
+import models.Producto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import util.ProductManagerImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,10 +15,10 @@ class ProductManagerImplTest {
     @BeforeEach
     void setUp() {
         this.pm = ProductManagerImpl.getInstance();
-        pm.addProduct("Mandarina", 2.1);
-        pm.addProduct("Macarrones", 1);
-        pm.addProduct("Brocoli", 3.0);
-        pm.addProduct("Manzana", 2.0);
+        pm.addProduct(1, "Mandarina", 2.1);
+        pm.addProduct(2, "Macarrones", 1);
+        pm.addProduct(3, "Brocoli", 3.0);
+        pm.addProduct(4, "Manzana", 2.0);
     }
 
     @AfterEach
