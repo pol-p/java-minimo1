@@ -5,7 +5,7 @@ public class ItemPedido {
     private Integer cantidad;
 
     public ItemPedido(Producto p, Integer c){
-        this.product = product;
+        this.product = p;
         this.cantidad = c;
     }
 

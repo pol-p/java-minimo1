@@ -71,17 +71,53 @@ public class ProductManagerImpl implements ProductManager {
     @Override
     public Pedido servirPedido() {
         LOGGER.info("Sacando pedido de cocina");
-        return null;
+        Pedido pedidoAServir = this.queueComandas.poll();
+
+        if (pedidoAServir == null) {
+            LOGGER.warn("No hay pedidos pendientes para servir.");
+            return null; // No hay nada que servir
+        }
+
+        for(ItemPedido item: pedidoAServir.getListPedido()){
+            Producto p = item.getProduct();
+            p.setNumVentas(item.getCantidad());
+        }
+        this.listPedidosRealizados.add(pedidoAServir);
+        LOGGER.info("Pedido servido");
+        return pedidoAServir;
     }
 
     @Override
-    public List<Pedido> listarPedidosDeUsuario() {
-        return List.of();
+    public List<Pedido> listarPedidosDeUsuario(Integer idUsuario) {
+        LOGGER.info("INICIO listarPedidosDeUsuario para: " + idUsuario);
+
+        if (!this.mapUsuarios.containsKey(idUsuario)) {
+            LOGGER.error("Usuario no encontrado: " + idUsuario);
+            return new ArrayList<>();
+        }
+
+        List<Pedido> pedidosDelUsuario = new ArrayList<>();
+
+        for (Pedido p : this.listPedidosRealizados) {
+            if (p.getUsr().getId().equals(idUsuario)) {
+                pedidosDelUsuario.add(p);
+            }
+        }
+
+        LOGGER.info("FIN listarPedidosDeUsuario: Encontrados " + pedidosDelUsuario.size());
+        return pedidosDelUsuario;
     }
 
     @Override
     public List<Producto> listarProductosNumVentas() {
-        return List.of();
+        LOGGER.info("INICIO listarProductosNumVentas");
+
+        List<Producto> listaCopiada = new ArrayList<>(this.listProductos);
+
+        listaCopiada.sort((p1, p2) -> Integer.compare(p2.getNumVentas(), p1.getNumVentas()));
+
+        LOGGER.info("FIN listarProductosNumVentas");
+        return listaCopiada;
     }
 
     @Override

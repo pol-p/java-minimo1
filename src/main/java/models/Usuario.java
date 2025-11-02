@@ -1,7 +1,7 @@
 package models;
 
 public class Usuario {
-    private int id;
+    private Integer id;
     private String name;
 
     public Usuario(){}
@@ -19,7 +19,7 @@ public class Usuario {
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
