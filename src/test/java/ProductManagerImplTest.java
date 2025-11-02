@@ -1,9 +1,13 @@
+import models.ItemPedido;
+import models.Pedido;
 import models.Producto;
+import models.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.ProductManagerImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,11 +23,14 @@ class ProductManagerImplTest {
         pm.addProduct(2, "Macarrones", 1);
         pm.addProduct(3, "Brocoli", 3.0);
         pm.addProduct(4, "Manzana", 2.0);
+
+        pm.addUsr("Antonio", 1);
+        pm.addUsr("Maria", 2);
     }
 
     @AfterEach
     void tearDown() {
-
+        pm = null;
     }
 
     @Test
@@ -32,6 +39,23 @@ class ProductManagerImplTest {
 
     @Test
     void realizarPedido() {
+        // --- 1. Crear la "cesta" simple (List<SimpleItem>) ---
+        List<SimpleItem> miCestaSimple = new ArrayList<>();
+
+        // Queremos 2 Mandarinas (ID: 1) y 1 Macarrones (ID: 2)
+        miCestaSimple.add(new SimpleItem(1, 2));
+        miCestaSimple.add(new SimpleItem(2, 1));
+        miCestaSimple.add(new SimpleItem(4, 3));
+
+
+        // --- 2. Llamar al manager ---
+        Integer idUsuarioAntonio = 1;
+        Pedido pedidoCreado = pm.realizarPedido(idUsuarioAntonio, miCestaSimple);
+
+        // --- 3. Comprobar (Assert) los resultados ---
+        assertNotNull(pedidoCreado);
+        assertEquals(3, pedidoCreado.getListPedido().size()); // Asumo Pedido.getItems()
+        assertEquals("Antonio", pedidoCreado.getUsr().getName()); // Asumo Pedido.getUsuario().getName()
     }
 
     @Test

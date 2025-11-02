@@ -3,13 +3,14 @@ package util;
 import models.ItemPedido;
 import models.Pedido;
 import models.Producto;
+import models.SimpleItem;
 
 import java.util.List;
 
 public interface ProductManager {
-    public Pedido realizarPedido(String nameUsr, List<ItemPedido> lista);
+    public Pedido realizarPedido(Integer idUsuario, List<SimpleItem> itemsSolicitados);
     public List<Producto> listarProductosPrecio();
-    public Producto servirPedido();
+    public Pedido servirPedido();
     public List<Pedido> listarPedidosDeUsuario();
     public List<Producto> listarProductosNumVentas();
 

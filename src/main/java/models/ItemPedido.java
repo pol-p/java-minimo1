@@ -2,9 +2,9 @@ package models;
 
 public class ItemPedido {
     private Producto product;
-    private int cantidad;
+    private Integer cantidad;
 
-    public void ItemPedido(Producto p, int c){
+    public ItemPedido(Producto p, Integer c){
         this.product = product;
         this.cantidad = c;
     }

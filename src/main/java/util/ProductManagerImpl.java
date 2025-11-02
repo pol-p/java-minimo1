@@ -2,10 +2,7 @@ package util;
 
 import java.util.*;
 
-import models.ItemPedido;
-import models.Pedido;
-import models.Producto;
-import models.Usuario;
+import models.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,8 +35,29 @@ public class ProductManagerImpl implements ProductManager {
 
 
     @Override
-    public Pedido realizarPedido(String nameUsr, List<ItemPedido> lista) {
-        return null;
+    public Pedido realizarPedido(Integer id, List<SimpleItem> lista) {
+        if(!this.mapUsuarios.containsKey(id)){
+            LOGGER.warn("Usuario no auth");
+            return null;
+        }
+        List<ItemPedido> itemsCompletos = new ArrayList<>();
+
+        for(SimpleItem i: lista){
+            Producto prodEncontrado = getProductoById(i.getIdProducto());
+            if(prodEncontrado == null){
+                LOGGER.fatal("Pedido Cancelado ya que no existe el producto con id {}", i.getIdProducto());
+                return null;
+            }
+            ItemPedido itemPedido = new ItemPedido(prodEncontrado, i.getCantidad());
+            itemsCompletos.add(itemPedido);
+        }
+        Usuario usr = this.mapUsuarios.get(id);
+        Pedido nuevoPedido = new Pedido(itemsCompletos, usr);
+        this.queueComandas.add(nuevoPedido);
+
+        LOGGER.info("Pedido encolado con {} items.", itemsCompletos.size());
+
+        return nuevoPedido;
     }
 
     @Override
@@ -51,7 +69,8 @@ public class ProductManagerImpl implements ProductManager {
     }
 
     @Override
-    public Producto servirPedido() {
+    public Pedido servirPedido() {
+        LOGGER.info("Sacando pedido de cocina");
         return null;
     }
 
@@ -81,6 +100,20 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public void addUsr(String nameUsr, int idUsr) {
+        if(this.mapUsuarios.containsKey(idUsr)){
+            LOGGER.warn("El usuario con id = {} ya esta creado", idUsr);
+            return;
+        }
+        this.mapUsuarios.put(idUsr, new Usuario(idUsr, nameUsr));
+        LOGGER.info("Usuario {} creado", nameUsr);
+    }
 
+    private Producto getProductoById(int id) {
+        for (Producto p : this.listProductos) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
     }
 }

@@ -13,6 +13,7 @@ public class Pedido {
     public Pedido(List<ItemPedido> listPedido, Usuario usr) {
         this.listPedido = listPedido;
         this.usr = usr;
+        this.servido = false;
     }
 
     public List<ItemPedido> getListPedido() {
